@@ -2,169 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Alex Nguyen | Dubai Luxury Garden</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Nguyen | Dubai Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
-        :root { --pink-bg: #fff0f3; --pink-dark: #880e4f; --gold: #c5a059; }
+        :root { --bg: #fcfaf8; --accent: #1a1a1a; --pink: #eebdc4; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; background: var(--pink-bg); font-family: 'Montserrat', sans-serif; overflow: hidden; }
+        body { background: var(--bg); color: var(--accent); font-family: 'Montserrat', sans-serif; overflow: hidden; }
 
-        /* Loader Gladeye Style */
+        /* Loader */
         #loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--pink-dark); z-index: 100;
+            position: fixed; inset: 0; background: #fff; z-index: 1000;
             display: flex; justify-content: center; align-items: center;
-            transition: transform 1.2s cubic-bezier(1, 0, 0, 1);
+            transition: opacity 1s ease-in-out;
         }
-        .loader-text { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; letter-spacing: 10px; overflow: hidden; }
-        .loader-text span { display: block; transform: translateY(100%); animation: reveal 0.8s forwards 0.5s; }
-        @keyframes reveal { to { transform: translateY(0); } }
+        .loader-line { width: 100px; height: 1px; background: #000; transform: scaleX(0); animation: load 1.5s forwards; }
+        @keyframes load { to { transform: scaleX(1); } }
 
-        /* Overlay UI */
-        .ui {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; z-index: 10;
-            pointer-events: none; padding: 20px;
-        }
-        .ui h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 8vw, 5rem); color: var(--pink-dark); line-height: 0.9; margin: 20px 0; }
-        .btn { padding: 15px 35px; border: 1.5px solid var(--pink-dark); color: var(--pink-dark); text-decoration: none; border-radius: 50px; pointer-events: auto; font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; transition: 0.4s; }
-        .btn:hover { background: var(--pink-dark); color: white; transform: scale(1.05); }
-
-        canvas { position: absolute; top: 0; left: 0; display: block; z-index: 1; }
+        /* UI Minimalism */
+        nav { position: fixed; top: 40px; width: 100%; padding: 0 60px; display: flex; justify-content: space-between; z-index: 100; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
         
-        /* Scroll Hint */
-        .scroll-msg { position: absolute; bottom: 30px; font-size: 0.6rem; letter-spacing: 2px; color: var(--pink-dark); opacity: 0.6; z-index: 11; width: 100%; text-align: center; text-transform: uppercase; }
+        .main-content {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 10; pointer-events: none;
+        }
+        .main-content h1 { 
+            font-family: 'Cormorant Garamond', serif; font-weight: 300; 
+            font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -1px; line-height: 1; text-align: center;
+        }
+        .main-content p { font-size: 9px; letter-spacing: 5px; margin-top: 20px; opacity: 0.5; text-transform: uppercase; }
+
+        canvas { position: absolute; inset: 0; z-index: 1; }
+        
+        /* Interactive Hint */
+        .hint { position: fixed; bottom: 40px; width: 100%; text-align: center; font-size: 9px; opacity: 0.3; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <div id="loader"><div class="loader-text"><span>ALEX NGUYEN</span></div></div>
+    <div id="loader"><div class="loader-line"></div></div>
 
-    <div class="ui">
-        <p style="color: var(--gold); letter-spacing: 4px; font-size: 0.7rem;">ELITE NAIL ARTIST • DUBAI</p>
-        <h1>Hand-Crafted<br>Technical Perfection</h1>
-        <a href="#" class="btn">DISCOVER WORK</a>
+    <nav>
+        <div>Alex Nguyen</div>
+        <div>Nail Technical • Dubai</div>
+    </nav>
+
+    <div class="main-content">
+        <h1>Refining the art<br>of technical nails.</h1>
+        <p>A Curated Experience</p>
     </div>
 
-    <div class="scroll-msg">Scroll or Swipe up to grow more</div>
+    <div class="hint">MOVE CURSOR TO DISPLACE</div>
     <canvas id="canvas"></canvas>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        let width, height, stems = [];
-        const mouse = { x: -1000, y: -1000 };
-        let scrollOffset = 0;
+        let width, height, points = [];
+        const mouse = { x: -100, y: -100, lerpX: -100, lerpY: -100 };
 
-        class Stem {
-            constructor(x, isNew = false) {
+        // Cấu hình cành hoa - Gladeye Style
+        const COUNT = window.innerWidth < 768 ? 12 : 25;
+        const TENSION = 0.05;
+        const FRICTION = 0.85;
+
+        class Blade {
+            constructor(x) {
                 this.x = x;
-                this.segments = 12;
-                this.points = [];
-                this.len = Math.random() * 250 + 200;
-                this.baseY = isNew ? height + 200 : height + Math.random() * 500; // Mọc từ dưới lên
-                this.targetY = isNew ? height : height;
-                this.color = ['#f48fb1', '#ad1457', '#c5a059'][Math.floor(Math.random() * 3)];
-                this.angleOffset = Math.random() * Math.PI * 2;
+                this.height = Math.random() * 300 + 350;
+                this.angle = 0;
+                this.tipX = x;
+                this.tipY = 0;
+                this.segments = [];
+                this.color = Math.random() > 0.8 ? '#d4af37' : '#eebdc4'; // Gold or Pink
                 
-                for (let i = 0; i < this.segments; i++) {
-                    this.points.push({ x: x, y: this.baseY - (i * (this.len / this.segments)), oldX: x, oldY: this.baseY });
+                for(let i = 0; i < 20; i++) {
+                    this.segments.push({ x: x, y: 0, vx: 0, vy: 0 });
                 }
             }
 
             update() {
-                // Hiệu ứng mọc dần lên khi mới tạo
-                if (this.baseY > height) this.baseY -= 2;
+                // Lerp mouse for smoothness
+                mouse.lerpX += (mouse.x - mouse.lerpX) * 0.1;
+                mouse.lerpY += (mouse.y - mouse.lerpY) * 0.1;
 
-                let head = this.points[this.points.length - 1];
-                
-                // Gió đung đưa nhẹ
-                let wind = Math.sin(Date.now() * 0.001 + this.x) * 1.5;
+                this.segments.forEach((p, i) => {
+                    if (i === 0) {
+                        p.x = this.x;
+                        p.y = height + 50; // Base fixed at bottom
+                    } else {
+                        const prev = this.segments[i-1];
+                        
+                        // Physics
+                        const dx = p.x - prev.x;
+                        const dy = p.y - prev.y;
+                        const angle = Math.atan2(dy, dx);
+                        
+                        // Gió nhẹ (Ambient movement)
+                        const sway = Math.sin(Date.now() * 0.001 + this.x) * (i * 0.2);
+                        
+                        // Tương tác chuột mượt mà
+                        const distMouse = Math.hypot(mouse.lerpX - p.x, mouse.lerpY - p.y);
+                        const force = Math.max(0, (150 - distMouse) / 150);
+                        
+                        p.vx += (mouse.lerpX - p.x) * force * 0.02;
+                        p.vy += (mouse.lerpY - p.y) * force * 0.02;
 
-                for (let i = 1; i < this.segments; i++) {
-                    let p = this.points[i];
-                    let prev = this.points[i - 1];
+                        p.vx *= FRICTION;
+                        p.vy *= FRICTION;
+                        
+                        p.x += p.vx + sway;
+                        p.y += p.vy;
 
-                    // Vật lý Verlet đơn giản
-                    let vx = (p.x - p.oldX) * 0.9;
-                    let vy = (p.y - p.oldY) * 0.9;
-                    p.oldX = p.x;
-                    p.oldY = p.y;
-                    p.x += vx + wind * (i/10);
-                    p.y += vy;
-
-                    // Tương tác chuột
-                    let dx = mouse.x - p.x;
-                    let dy = mouse.y - p.y;
-                    let dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 100) {
-                        let force = (100 - dist) / 100;
-                        p.x -= (dx / dist) * force * 5;
-                        p.y -= (dy / dist) * force * 5;
+                        // Ràng buộc khoảng cách (Spring constraint)
+                        const targetDist = this.height / 20;
+                        const actualDist = Math.hypot(p.x - prev.x, p.y - prev.y);
+                        const diff = (targetDist - actualDist) / actualDist;
+                        
+                        p.x += (p.x - prev.x) * diff;
+                        p.y += (p.y - prev.y) * diff;
                     }
-
-                    // Ràng buộc độ dài giữa các đốt
-                    let dx2 = p.x - prev.x;
-                    let dy2 = p.y - prev.y;
-                    let distance = Math.sqrt(dx2 * dx2 + dy2 * dy2);
-                    let diff = (this.len / this.segments) - distance;
-                    let percent = diff / distance / 2;
-                    let offsetX = dx2 * percent;
-                    let offsetY = dy2 * percent;
-
-                    if (i > 0) {
-                        p.x += offsetX;
-                        p.y += offsetY;
-                    }
-                }
-                this.points[0].x = this.x;
-                this.points[0].y = this.baseY;
+                });
             }
 
             draw() {
                 ctx.beginPath();
-                ctx.moveTo(this.points[0].x, this.points[0].y);
-                for (let i = 1; i < this.segments; i++) {
-                    ctx.lineTo(this.points[i].x, this.points[i].y);
+                ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                
+                for(let i = 1; i < this.segments.length - 1; i++) {
+                    const xc = (this.segments[i].x + this.segments[i+1].x) / 2;
+                    const yc = (this.segments[i].y + this.segments[i+1].y) / 2;
+                    ctx.quadraticCurveTo(this.segments[i].x, this.segments[i].y, xc, yc);
                 }
-                ctx.strokeStyle = '#2d4a22';
-                ctx.lineWidth = 1.5;
+
+                ctx.strokeStyle = '#222';
+                ctx.lineWidth = 0.5;
                 ctx.stroke();
 
-                // Vẽ móng tay nghệ thuật ở đầu cành
-                let head = this.points[this.segments - 1];
-                this.drawNail(head.x, head.y);
+                // Vẽ phần "Nail Organic Shape" ở đầu cành
+                const tip = this.segments[this.segments.length - 1];
+                this.drawOrganicNail(tip.x, tip.y);
             }
 
-            drawNail(x, y) {
+            drawOrganicNail(x, y) {
                 ctx.save();
                 ctx.translate(x, y);
-                // Tạo hướng cho móng tay luôn hướng lên
-                let dx = this.points[this.segments-1].x - this.points[this.segments-2].x;
-                let dy = this.points[this.segments-1].y - this.points[this.segments-2].y;
-                ctx.rotate(Math.atan2(dy, dx) + Math.PI/2);
-
-                // Đổ bóng và Gradient cho giống móng thật
-                let grd = ctx.createLinearGradient(-10, -20, 10, 20);
-                grd.addColorStop(0, this.color);
-                grd.addColorStop(1, '#000');
-
-                ctx.fillStyle = grd;
+                ctx.fillStyle = this.color;
+                
+                // Hình khối móng tay nghệ thuật tối giản
                 ctx.beginPath();
-                ctx.moveTo(-8, 0);
-                ctx.quadraticCurveTo(-8, -25, 0, -30); // Đầu móng nhọn Coffin/Almond
-                ctx.quadraticCurveTo(8, -25, 8, 0);
-                ctx.lineTo(6, 10);
-                ctx.lineTo(-6, 10);
+                ctx.ellipse(0, 0, 4, 12, Math.PI / 4, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Hiệu ứng bóng sáng (Highlight) trên móng
-                ctx.fillStyle = 'rgba(255,255,255,0.2)';
-                ctx.beginPath();
-                ctx.ellipse(-3, -10, 2, 10, 0, 0, Math.PI*2);
-                ctx.fill();
+                // Điểm nhấn tinh tế
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 0.2;
+                ctx.stroke();
                 ctx.restore();
             }
         }
@@ -172,45 +165,38 @@
         function init() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            stems = [];
-            for (let i = 0; i < 25; i++) stems.push(new Stem(Math.random() * width));
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            stems.forEach((s, index) => {
-                s.update();
-                s.draw();
-                // Xóa hoa nếu bị trôi quá cao khi "cuộn"
-                if (s.baseY < -500) stems.splice(index, 1);
-            });
-            requestAnimationFrame(animate);
-        }
-
-        // Cơ chế lặp vô tận: Khi scroll, di chuyển baseY của hoa và tạo hoa mới
-        window.addEventListener('wheel', (e) => {
-            stems.forEach(s => s.baseY -= e.deltaY * 0.5);
-            if (Math.abs(e.deltaY) > 5) {
-                if (stems.length < 40) stems.push(new Stem(Math.random() * width, true));
+            points = [];
+            for(let i = 0; i < COUNT; i++) {
+                points.push(new Blade((width / COUNT) * i + (Math.random() * 50)));
             }
-        });
+        }
 
-        // Touch cho mobile
-        let touchY = 0;
-        window.addEventListener('touchstart', e => touchY = e.touches[0].clientY);
-        window.addEventListener('touchmove', e => {
-            let deltaY = touchY - e.touches[0].clientY;
-            stems.forEach(s => s.baseY -= deltaY * 1.2);
-            if (stems.length < 35) stems.push(new Stem(Math.random() * width, true));
-            touchY = e.touches[0].clientY;
-        });
+        function render() {
+            ctx.clearRect(0, 0, width, height);
+            points.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(render);
+        }
 
-        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        // Mouse & Touch
+        const updateMouse = (e) => {
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            mouse.x = x; mouse.y = y;
+        };
+
+        window.addEventListener('mousemove', updateMouse);
+        window.addEventListener('touchmove', updateMouse);
         window.addEventListener('resize', init);
 
         window.onload = () => {
-            init(); animate();
-            setTimeout(() => document.getElementById('loader').style.transform = 'translateY(-100%)', 2500);
+            init(); render();
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').remove(), 1000);
+            }, 1500);
         };
     </script>
 </body>
