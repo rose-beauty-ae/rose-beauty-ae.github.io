@@ -2,298 +2,265 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Elite Nail Artist Portfolio | Dubai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Nguyen | Master Nail Artist - Dubai</title>
+    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --soft-pink: #fdf2f5;
-            --main-pink: #f06292;
-            --dark-pink: #ad1457;
-            --gold: #d4af37;
-            --white: #ffffff;
+            --pink-light: #fff5f7;
+            --pink-main: #f48fb1;
+            --pink-dark: #880e4f;
+            --gold: #c5a059;
+            --text-gray: #555;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: var(--soft-pink); 
-            color: #333; 
-            line-height: 1.5;
-            padding-bottom: 70px; /* Space for mobile menu */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--pink-light);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.7;
         }
 
-        /* Responsive Hero */
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--pink-dark); letter-spacing: 2px; }
+
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; transition: var(--transition); }
+        .nav-links a:hover { color: var(--pink-main); }
+
+        /* --- Hero Section --- */
         .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
-                        url('https://images.unsplash.com/photo-1604314134173-6b7821002cd0?auto=format&fit=crop&w=800&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
+            height: 100vh;
+            display: flex; align-items: center;
+            background: linear-gradient(135deg, rgba(255,245,247,0.9) 0%, rgba(255,255,255,0.7) 100%), 
+                        url('https://images.unsplash.com/photo-1600232943169-3fe49a6f4031?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            padding: 0 10%;
         }
 
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 10vw, 4.5rem);
-            color: var(--dark-pink);
-            line-height: 1.1;
+        .hero-text h2 { font-size: 1.2rem; color: var(--gold); letter-spacing: 5px; margin-bottom: 15px; font-weight: 400; }
+        .hero-text h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 8vw, 6rem); color: var(--pink-dark); line-height: 1; margin-bottom: 25px; }
+        .hero-text p { max-width: 500px; margin-bottom: 35px; font-size: 1.1rem; color: var(--text-gray); }
+
+        .btn-gold {
+            padding: 15px 40px; background: var(--gold); color: white; border: none;
+            border-radius: 50px; text-decoration: none; font-weight: 600; 
+            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); transition: var(--transition);
+        }
+        .btn-gold:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.4); }
+
+        /* --- Sections General --- */
+        section { padding: 100px 10%; }
+        .section-header { text-align: center; margin-bottom: 70px; }
+        .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--pink-dark); }
+        .section-header span { color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; }
+
+        /* --- Services Grid --- */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card {
+            background: white; padding: 50px 40px; border-radius: 30px; text-align: center;
+            transition: var(--transition); border: 1px solid #f0f0f0;
+        }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--pink-main); }
+        .service-card i { font-size: 3rem; color: var(--pink-main); margin-bottom: 25px; }
+        .service-card h3 { margin-bottom: 15px; font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; }
+
+        /* --- Dubai Experience Timeline --- */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::before { content: ''; position: absolute; left: 50%; width: 1px; height: 100%; background: var(--gold); }
+        .timeline-item { margin-bottom: 50px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .timeline-content { width: 45%; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow); }
+        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+
+        /* --- Gallery --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 20px; height: 400px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* --- Music Player UI --- */
+        #music-player {
+            position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+            background: white; padding: 10px 20px; border-radius: 50px;
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .play-btn { background: var(--pink-dark); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 992px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; } /* Hide for mobile menu simplicity */
+            .hero { padding: 0 5%; text-align: center; justify-content: center; }
+            .hero-text p { margin: 0 auto 35px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* Bottom Mobile Navigation */
-        .mobile-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-            z-index: 2000;
-        }
-
-        .mobile-nav a {
-            color: #888;
-            text-decoration: none;
-            font-size: 0.7rem;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .mobile-nav a.active { color: var(--main-pink); }
-        .mobile-nav i { font-size: 1.4rem; display: block; margin-bottom: 2px; }
-
-        /* Container & Sections */
-        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-        
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--dark-pink);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        /* Service Cards - Mobile Optimized */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(240, 98, 146, 0.1);
-            border: 1px solid rgba(240, 98, 146, 0.1);
-        }
-
-        .card i { color: var(--main-pink); font-size: 2rem; margin-bottom: 15px; }
-
-        /* Experience Timeline - Mobile Optimized */
-        .timeline-mobile {
-            border-left: 3px solid var(--main-pink);
-            margin-left: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .timeline-item {
-            margin-bottom: 35px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -33px;
-            top: 5px;
-            width: 14px;
-            height: 14px;
-            background: var(--main-pink);
-            border: 3px solid white;
-            border-radius: 50%;
-        }
-
-        /* Gallery - Masonry-like */
-        .gallery {
-            column-count: 2;
-            column-gap: 10px;
-        }
-        @media (max-width: 480px) { .gallery { column-count: 2; } }
-
-        .gallery img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        /* Music Floating Button - Repositioned for Mobile */
-        #music-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 3000;
-        }
-
-        /* Contact Button */
-        .btn-call {
-            background: var(--dark-pink);
-            color: white;
-            display: block;
-            text-align: center;
-            padding: 15px;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 20px;
-        }
-
-        /* Desktop specific tweaks */
-        @media (min-width: 769px) {
-            .mobile-nav { top: 0; bottom: auto; padding: 20px 0; background: transparent; box-shadow: none; }
-            .mobile-nav a { color: #555; font-size: 0.9rem; font-weight: 600; }
-            body { padding-bottom: 0; padding-top: 80px; }
-            .gallery { column-count: 3; }
+        @media (max-width: 768px) {
+            .section-header h2 { font-size: 2.5rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item { flex-direction: row !important; }
+            .timeline-content { width: calc(100% - 50px); margin-left: 50px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .hero-text h1 { font-size: 3.5rem; }
+            #music-player { left: 50%; transform: translateX(-50%); bottom: 20px; width: 250px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="music-container">
-        <button id="music-toggle" style="background: white; border: none; width: 45px; height: 45px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; color: var(--main-pink);">
-            <i id="music-icon" class="fas fa-music"></i>
-        </button>
-        <audio id="bg-music" loop>
+    <div id="music-player">
+        <button class="play-btn" id="musicToggle"><i class="fas fa-play" id="playIcon"></i></button>
+        <div style="font-size: 0.7rem;">
+            <strong style="display: block; color: var(--pink-dark);">Dubai Spa Ambience</strong>
+            <span id="status">Music Off</span>
+        </div>
+        <audio id="bgMusic" loop>
             <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
         </audio>
     </div>
 
-    <nav class="mobile-nav">
-        <a href="#about" class="active"><i class="fas fa-user"></i>About</a>
-        <a href="#skills"><i class="fas fa-magic"></i>Skills</a>
-        <a href="#portfolio"><i class="fas fa-images"></i>Work</a>
-        <a href="#contact"><i class="fas fa-paper-plane"></i>Contact</a>
+    <nav>
+        <div class="logo">ALEX.DUBÀI</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#work">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
 
     <header class="hero">
-        <div class="hero-content" data-aos="zoom-in">
-            <p>BASED IN DUBAI</p>
-            <h1>Alex<br>Nguyen</h1>
-            <p style="letter-spacing: 2px; font-weight: 300;">Luxury Nail Technical Expert</p>
+        <div class="hero-text" data-aos="fade-right">
+            <span>AVAILABLE IN DUBAI</span>
+            <h2>MASTER NAIL ARTIST</h2>
+            <h1>Elevating<br>Nail Artistry</h1>
+            <p>Providing 5-star technical nail services with 5 years of experience in the heart of UAE's luxury district. Precision, Hygiene, and Art.</p>
+            <a href="#contact" class="btn-gold">BOOK APPOINTMENT</a>
         </div>
     </header>
 
-    <div class="container">
-        <section id="about" data-aos="fade-up">
-            <h2 class="section-title">Professional Profile</h2>
-            <div class="card">
-                <p>With 5 years in Dubai's competitive beauty scene, I deliver high-precision technical work. My signature style combines <strong>Russian Manicure</strong> precision with <strong>Middle Eastern Luxury</strong> aesthetics.</p>
-                <a href="tel:+97150000000" class="btn-call"><i class="fas fa-phone"></i> HIRE ME NOW</a>
+    <section id="about">
+        <div class="section-header" data-aos="fade-up">
+            <span>My Expertise</span>
+            <h2>Precision Meets Luxury</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card" data-aos="zoom-in">
+                <i class="fas fa-hand-sparkles"></i>
+                <h3>Russian E-File</h3>
+                <p>The cleanest cuticle treatment in Dubai. Flawless application that lasts up to 5 weeks with zero lifting.</p>
             </div>
-        </section>
+            <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-gem"></i>
+                <h3>Sculpted Gel</h3>
+                <p>No tips used. Hand-sculpted extensions tailored to your natural nail shape for maximum elegance.</p>
+            </div>
+            <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Bespoke Art</h3>
+                <p>From minimalist "Old Money" styles to extravagant 3D designs encrusted with Swarovski crystals.</p>
+            </div>
+        </div>
+    </section>
 
-        <section id="skills" style="margin-top: 60px;" data-aos="fade-up">
-            <h2 class="section-title">Expertise</h2>
-            <div class="grid">
-                <div class="card">
-                    <i class="fas fa-microchip"></i>
-                    <h3>Russian E-File</h3>
-                    <p>Cleanest cuticle work using advanced dry techniques.</p>
-                </div>
-                <div class="card">
-                    <i class="fas fa-gem"></i>
-                    <h3>Hard Gel Expert</h3>
-                    <p>Sculpting and extensions that look like natural nails.</p>
+    <section id="experience" style="background: #fff;">
+        <div class="section-header" data-aos="fade-up">
+            <span>Professional Path</span>
+            <h2>Dubai Career</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-content">
+                    <h4 style="color: var(--gold);">2022 - PRESENT</h4>
+                    <h3>Lead Technical Artist</h3>
+                    <p><strong>Downtown Dubai Spa</strong></p>
+                    <p>Managing VIP clients and training junior staff in advanced Russian Manicure techniques.</p>
                 </div>
             </div>
-        </section>
-
-        <section style="margin-top: 60px;" data-aos="fade-up">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline-mobile">
-                <div class="timeline-item">
-                    <h4 style="color: var(--dark-pink);">Senior Technician</h4>
-                    <p><strong>Downtown Dubai Luxury Spa</strong></p>
-                    <p style="font-size: 0.85rem; color: #666;">2022 - 2026 | Serving VIP & Celebrity clients.</p>
-                </div>
-                <div class="timeline-item">
-                    <h4 style="color: var(--dark-pink);">Nail Artist</h4>
-                    <p><strong>Jumeirah Elite Salon</strong></p>
-                    <p style="font-size: 0.85rem; color: #666;">2019 - 2022 | Focus on bridal and trend art.</p>
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-content">
+                    <h4 style="color: var(--gold);">2019 - 2022</h4>
+                    <h3>Senior Technician</h3>
+                    <p><strong>Elite Beauty Jumeirah</strong></p>
+                    <p>Specialized in bridal nail design and long-lasting gel systems for high-profile weddings.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="portfolio" style="margin-top: 60px;" data-aos="fade-up">
-            <h2 class="section-title">Portfolio</h2>
-            <div class="gallery">
-                <img src="https://images.unsplash.com/photo-1632345033839-21c73b2f3d46?w=400" alt="Work 1">
-                <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400" alt="Work 2">
-                <img src="https://images.unsplash.com/photo-1604314134173-6b7821002cd0?w=400" alt="Work 3">
-                <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=400" alt="Work 4">
-            </div>
-        </section>
+    <section id="work">
+        <div class="section-header" data-aos="fade-up">
+            <span>Visual Mastery</span>
+            <h2>Selected Works</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item" data-aos="flip-left"><img src="https://images.unsplash.com/photo-1632345033839-21c73b2f3d46?w=600" alt=""></div>
+            <div class="gallery-item" data-aos="flip-left" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1604314134173-6b7821002cd0?w=600" alt=""></div>
+            <div class="gallery-item" data-aos="flip-left" data-aos-delay="200"><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600" alt=""></div>
+        </div>
+    </section>
 
-    </div>
+    <section id="contact" style="background: var(--pink-dark); color: white; text-align: center;">
+        <div class="section-header">
+            <span style="color: var(--gold);">Contact</span>
+            <h2 style="color: white;">Let's Create Art</h2>
+        </div>
+        <p style="margin-bottom: 40px; font-size: 1.2rem;">Available for salon hire or private VIP bookings in Dubai.</p>
+        <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+            <a href="mailto:contact@alexnails.ae" style="color: white; font-size: 1.5rem;"><i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/971500000000" style="color: white; font-size: 1.5rem;"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+        </div>
+    </section>
 
-    <footer id="contact" style="text-align: center; padding: 40px 20px; background: white;">
-        <h2 class="section-title">Get in Touch</h2>
-        <p>Instagram: @AlexNailsDubai</p>
-        <p>WhatsApp: +971 5X XXX XXXX</p>
-        <div style="margin-top: 20px; font-size: 0.7rem; color: #aaa;">&copy; 2026 Dubai Professional Artist</div>
+    <footer style="padding: 30px; text-align: center; font-size: 0.8rem; color: #888;">
+        &copy; 2026 ALEX NGUYEN | PROFESSIONAL NAIL TECHNICIAN | DUBAI, UAE
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, once: true });
+        // Init Animations
+        AOS.init({ duration: 1000, once: true });
 
         // Music Logic
-        const music = document.getElementById('bg-music');
-        const toggleBtn = document.getElementById('music-toggle');
-        const icon = document.getElementById('music-icon');
-        let isPlaying = false;
-        music.volume = 0.2;
+        const music = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicToggle');
+        const icon = document.getElementById('playIcon');
+        const status = document.getElementById('status');
+        let playing = false;
 
-        toggleBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                music.pause();
-                icon.className = 'fas fa-music';
-            } else {
+        btn.addEventListener('click', () => {
+            if(!playing) {
                 music.play();
                 icon.className = 'fas fa-pause';
+                status.innerText = 'Now Playing...';
+            } else {
+                music.pause();
+                icon.className = 'fas fa-play';
+                status.innerText = 'Music Off';
             }
-            isPlaying = !isPlaying;
-        });
-
-        // Simple Nav Active State
-        window.addEventListener('scroll', () => {
-            let current = "";
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            document.querySelectorAll('.mobile-nav a').forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(current)) {
-                    a.classList.add('active');
-                }
-            });
+            playing = !playing;
         });
     </script>
 </body>
