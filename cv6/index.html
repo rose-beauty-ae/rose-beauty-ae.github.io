@@ -3,196 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Alex Nguyen | Dubai Nail Artist</title>
+    <title>Alex Nguyen | Dubai Luxury Garden</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --pink-bg: #fff0f3;
-            --pink-dark: #880e4f;
-            --gold: #c5a059;
-        }
-
+        :root { --pink-bg: #fff0f3; --pink-dark: #880e4f; --gold: #c5a059; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { 
-            width: 100%; height: 100%; 
-            overflow: hidden; /* Giữ cố định để trải nghiệm vườn hoa */
-            background: var(--pink-bg);
-            font-family: 'Montserrat', sans-serif;
-        }
+        body, html { width: 100%; height: 100%; background: var(--pink-bg); font-family: 'Montserrat', sans-serif; overflow: hidden; }
 
-        /* --- Entrance Layer --- */
+        /* Loader Gladeye Style */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--pink-dark); z-index: 100;
             display: flex; justify-content: center; align-items: center;
-            transition: transform 1s cubic-bezier(1, 0, 0, 1);
+            transition: transform 1.2s cubic-bezier(1, 0, 0, 1);
         }
-        .loader-text {
-            color: var(--gold); font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem; letter-spacing: 5px; overflow: hidden;
-        }
-        .loader-text span {
-            display: block; transform: translateY(100%);
-            animation: reveal 0.8s forwards 0.5s;
-        }
+        .loader-text { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; letter-spacing: 10px; overflow: hidden; }
+        .loader-text span { display: block; transform: translateY(100%); animation: reveal 0.8s forwards 0.5s; }
         @keyframes reveal { to { transform: translateY(0); } }
 
-        /* --- UI Elements --- */
-        .content {
+        /* Overlay UI */
+        .ui {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; text-align: center; z-index: 10;
-            pointer-events: none; /* Để chuột có thể tương tác với hoa bên dưới */
-            padding: 20px;
+            pointer-events: none; padding: 20px;
         }
-        .content h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3rem, 10vw, 6rem); color: var(--pink-dark);
-            line-height: 0.9; margin-bottom: 20px;
-        }
-        .content p { font-size: 0.8rem; letter-spacing: 3px; color: var(--gold); font-weight: 600; }
+        .ui h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 8vw, 5rem); color: var(--pink-dark); line-height: 0.9; margin: 20px 0; }
+        .btn { padding: 15px 35px; border: 1.5px solid var(--pink-dark); color: var(--pink-dark); text-decoration: none; border-radius: 50px; pointer-events: auto; font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; transition: 0.4s; }
+        .btn:hover { background: var(--pink-dark); color: white; transform: scale(1.05); }
+
+        canvas { position: absolute; top: 0; left: 0; display: block; z-index: 1; }
         
-        .contact-btn {
-            margin-top: 30px; padding: 15px 35px; border: 1px solid var(--pink-dark);
-            color: var(--pink-dark); text-decoration: none; border-radius: 50px;
-            pointer-events: auto; transition: 0.3s; font-size: 0.7rem; font-weight: 600;
-        }
-        .contact-btn:hover { background: var(--pink-dark); color: white; }
-
-        canvas { position: absolute; top: 0; left: 0; display: block; }
-
-        /* Mobile Hint */
-        .mobile-hint {
-            position: absolute; bottom: 20px; font-size: 0.6rem; color: #aaa;
-            z-index: 11; width: 100%; text-align: center;
-        }
+        /* Scroll Hint */
+        .scroll-msg { position: absolute; bottom: 30px; font-size: 0.6rem; letter-spacing: 2px; color: var(--pink-dark); opacity: 0.6; z-index: 11; width: 100%; text-align: center; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <div id="loader">
-        <div class="loader-text"><span>ALEX NGUYEN</span></div>
+    <div id="loader"><div class="loader-text"><span>ALEX NGUYEN</span></div></div>
+
+    <div class="ui">
+        <p style="color: var(--gold); letter-spacing: 4px; font-size: 0.7rem;">ELITE NAIL ARTIST • DUBAI</p>
+        <h1>Hand-Crafted<br>Technical Perfection</h1>
+        <a href="#" class="btn">DISCOVER WORK</a>
     </div>
 
-    <div class="content">
-        <p>MASTER NAIL TECHNICIAN</p>
-        <h1>Dubai Luxury<br>Nailscape</h1>
-        <a href="https://wa.me/971500000000" class="contact-btn">GET IN TOUCH</a>
-    </div>
-
-    <div class="mobile-hint">Touch to interact with the Nailscape</div>
-    <canvas id="gardenCanvas"></canvas>
+    <div class="scroll-msg">Scroll or Swipe up to grow more</div>
+    <canvas id="canvas"></canvas>
 
     <script>
-        const canvas = document.getElementById('gardenCanvas');
+        const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        let width, height;
-        let stems = [];
-        const mouse = { x: -1000, y: -1000, active: false };
-
-        // Cấu hình các họa tiết Nails
-        const STEM_COUNT = window.innerWidth < 768 ? 15 : 35;
-        const SEGMENTS = 15;
-        const NAIL_COLORS = [
-            '#f06292', // Main Pink
-            '#ad1457', // Dark Pink
-            '#c5a059', // Gold
-            '#fce4ec', // Soft Pink
-            '#ffeb3b', // Glitter Gold (Yellowish)
-            '#9c27b0', // Purple (for rhinestone effect)
-            '#2196f3'  // Blue (for chrome effect)
-        ];
+        let width, height, stems = [];
+        const mouse = { x: -1000, y: -1000 };
+        let scrollOffset = 0;
 
         class Stem {
-            constructor(x) {
+            constructor(x, isNew = false) {
                 this.x = x;
+                this.segments = 12;
                 this.points = [];
-                this.targetAngle = 0;
-                this.currentAngle = 0;
-                this.length = (Math.random() * 200) + 300;
-                this.nailColor = NAIL_COLORS[Math.floor(Math.random() * NAIL_COLORS.length)];
-                this.nailSize = Math.random() * 15 + 10; // Kích thước móng
+                this.len = Math.random() * 250 + 200;
+                this.baseY = isNew ? height + 200 : height + Math.random() * 500; // Mọc từ dưới lên
+                this.targetY = isNew ? height : height;
+                this.color = ['#f48fb1', '#ad1457', '#c5a059'][Math.floor(Math.random() * 3)];
+                this.angleOffset = Math.random() * Math.PI * 2;
                 
-                // Chọn ngẫu nhiên loại họa tiết nails
-                this.nailDesignType = Math.floor(Math.random() * 3); // 0: Oval, 1: Square, 2: TearDrop
-
-                for(let i = 0; i < SEGMENTS; i++) {
-                    this.points.push({ x: x, y: height + (i * 10), oldX: x, oldY: height + (i * 10) });
+                for (let i = 0; i < this.segments; i++) {
+                    this.points.push({ x: x, y: this.baseY - (i * (this.len / this.segments)), oldX: x, oldY: this.baseY });
                 }
             }
 
             update() {
-                let wind = Math.sin(Date.now() * 0.001 + this.x) * 0.5;
+                // Hiệu ứng mọc dần lên khi mới tạo
+                if (this.baseY > height) this.baseY -= 2;
+
+                let head = this.points[this.points.length - 1];
                 
-                let dx = mouse.x - this.points[0].x;
-                let dy = mouse.y - (height - this.length);
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                
-                if (dist < 150) {
-                    this.targetAngle = (dx / 150) * 1.5;
-                } else {
-                    this.targetAngle = wind * 0.2;
-                }
+                // Gió đung đưa nhẹ
+                let wind = Math.sin(Date.now() * 0.001 + this.x) * 1.5;
 
-                this.currentAngle += (this.targetAngle - this.currentAngle) * 0.1;
+                for (let i = 1; i < this.segments; i++) {
+                    let p = this.points[i];
+                    let prev = this.points[i - 1];
 
-                ctx.beginPath();
-                ctx.moveTo(this.x, height);
-                
-                let lastX = this.x;
-                let lastY = height;
+                    // Vật lý Verlet đơn giản
+                    let vx = (p.x - p.oldX) * 0.9;
+                    let vy = (p.y - p.oldY) * 0.9;
+                    p.oldX = p.x;
+                    p.oldY = p.y;
+                    p.x += vx + wind * (i/10);
+                    p.y += vy;
 
-                for(let i = 0; i < SEGMENTS; i++) {
-                    let angle = (i / SEGMENTS) * this.currentAngle;
-                    let segLen = this.length / SEGMENTS;
-                    
-                    let nextX = lastX + Math.sin(angle) * segLen;
-                    let nextY = lastY - Math.cos(angle) * segLen;
-                    
-                    // Vẽ thân cành (stem)
-                    ctx.lineTo(nextX, nextY);
-                    
-                    lastX = nextX;
-                    lastY = nextY;
+                    // Tương tác chuột
+                    let dx = mouse.x - p.x;
+                    let dy = mouse.y - p.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 100) {
+                        let force = (100 - dist) / 100;
+                        p.x -= (dx / dist) * force * 5;
+                        p.y -= (dy / dist) * force * 5;
+                    }
 
-                    // Vẽ họa tiết nails ở điểm cuối cùng
-                    if(i === SEGMENTS - 1) {
-                        this.drawNailDesign(nextX, nextY);
+                    // Ràng buộc độ dài giữa các đốt
+                    let dx2 = p.x - prev.x;
+                    let dy2 = p.y - prev.y;
+                    let distance = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                    let diff = (this.len / this.segments) - distance;
+                    let percent = diff / distance / 2;
+                    let offsetX = dx2 * percent;
+                    let offsetY = dy2 * percent;
+
+                    if (i > 0) {
+                        p.x += offsetX;
+                        p.y += offsetY;
                     }
                 }
-                
-                ctx.strokeStyle = '#2d5a27'; // Màu thân cành
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                this.points[0].x = this.x;
+                this.points[0].y = this.baseY;
             }
 
-            drawNailDesign(x, y) {
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.points[0].x, this.points[0].y);
+                for (let i = 1; i < this.segments; i++) {
+                    ctx.lineTo(this.points[i].x, this.points[i].y);
+                }
+                ctx.strokeStyle = '#2d4a22';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Vẽ móng tay nghệ thuật ở đầu cành
+                let head = this.points[this.segments - 1];
+                this.drawNail(head.x, head.y);
+            }
+
+            drawNail(x, y) {
                 ctx.save();
                 ctx.translate(x, y);
-                ctx.rotate(this.currentAngle); // Xoay họa tiết theo hướng cành
+                // Tạo hướng cho móng tay luôn hướng lên
+                let dx = this.points[this.segments-1].x - this.points[this.segments-2].x;
+                let dy = this.points[this.segments-1].y - this.points[this.segments-2].y;
+                ctx.rotate(Math.atan2(dy, dx) + Math.PI/2);
 
-                ctx.fillStyle = this.nailColor;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = `rgba(0,0,0,0.3)`;
+                // Đổ bóng và Gradient cho giống móng thật
+                let grd = ctx.createLinearGradient(-10, -20, 10, 20);
+                grd.addColorStop(0, this.color);
+                grd.addColorStop(1, '#000');
 
-                if (this.nailDesignType === 0) { // Oval/Almond Nail
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, this.nailSize * 0.6, this.nailSize, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                } else if (this.nailDesignType === 1) { // Square/Coffin Nail
-                    ctx.beginPath();
-                    ctx.rect(-this.nailSize * 0.5, -this.nailSize, this.nailSize, this.nailSize * 1.2);
-                    ctx.roundRect(-this.nailSize * 0.5, -this.nailSize, this.nailSize, this.nailSize * 1.2, 5); // Bo góc nhẹ
-                    ctx.fill();
-                } else if (this.nailDesignType === 2) { // TearDrop / Leaf shape
-                    ctx.beginPath();
-                    ctx.moveTo(0, this.nailSize);
-                    ctx.bezierCurveTo(this.nailSize * 0.8, this.nailSize * 0.8, this.nailSize * 0.8, -this.nailSize * 0.8, 0, -this.nailSize);
-                    ctx.bezierCurveTo(-this.nailSize * 0.8, -this.nailSize * 0.8, -this.nailSize * 0.8, this.nailSize * 0.8, 0, this.nailSize);
-                    ctx.closePath();
-                    ctx.fill();
-                }
-                
+                ctx.fillStyle = grd;
+                ctx.beginPath();
+                ctx.moveTo(-8, 0);
+                ctx.quadraticCurveTo(-8, -25, 0, -30); // Đầu móng nhọn Coffin/Almond
+                ctx.quadraticCurveTo(8, -25, 8, 0);
+                ctx.lineTo(6, 10);
+                ctx.lineTo(-6, 10);
+                ctx.fill();
+
+                // Hiệu ứng bóng sáng (Highlight) trên móng
+                ctx.fillStyle = 'rgba(255,255,255,0.2)';
+                ctx.beginPath();
+                ctx.ellipse(-3, -10, 2, 10, 0, 0, Math.PI*2);
+                ctx.fill();
                 ctx.restore();
             }
         }
@@ -201,37 +173,44 @@
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             stems = [];
-            for(let i = 0; i < STEM_COUNT; i++) {
-                stems.push(new Stem((width / STEM_COUNT) * i + Math.random() * 20));
-            }
+            for (let i = 0; i < 25; i++) stems.push(new Stem(Math.random() * width));
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            stems.forEach(s => s.update());
+            stems.forEach((s, index) => {
+                s.update();
+                s.draw();
+                // Xóa hoa nếu bị trôi quá cao khi "cuộn"
+                if (s.baseY < -500) stems.splice(index, 1);
+            });
             requestAnimationFrame(animate);
         }
 
-        // Events
+        // Cơ chế lặp vô tận: Khi scroll, di chuyển baseY của hoa và tạo hoa mới
+        window.addEventListener('wheel', (e) => {
+            stems.forEach(s => s.baseY -= e.deltaY * 0.5);
+            if (Math.abs(e.deltaY) > 5) {
+                if (stems.length < 40) stems.push(new Stem(Math.random() * width, true));
+            }
+        });
+
+        // Touch cho mobile
+        let touchY = 0;
+        window.addEventListener('touchstart', e => touchY = e.touches[0].clientY);
+        window.addEventListener('touchmove', e => {
+            let deltaY = touchY - e.touches[0].clientY;
+            stems.forEach(s => s.baseY -= deltaY * 1.2);
+            if (stems.length < 35) stems.push(new Stem(Math.random() * width, true));
+            touchY = e.touches[0].clientY;
+        });
+
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
         window.addEventListener('resize', init);
-        
-        const handleMove = (e) => {
-            const pos = e.touches ? e.touches[0] : e;
-            mouse.x = pos.clientX;
-            mouse.y = pos.clientY;
-        };
 
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('touchstart', handleMove);
-        window.addEventListener('touchmove', handleMove);
-
-        // Entrance
         window.onload = () => {
-            init();
-            animate();
-            setTimeout(() => {
-                document.getElementById('loader').style.transform = 'translateY(-100%)';
-            }, 2000);
+            init(); animate();
+            setTimeout(() => document.getElementById('loader').style.transform = 'translateY(-100%)', 2500);
         };
     </script>
 </body>
