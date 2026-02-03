@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Thi Hai Nguyen | Luxury Portfolio</title>
+    <title>Thi Hai Nguyen | Luxury Beauty Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Montserrat:wght@100;300;600&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -13,14 +13,12 @@
             --transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
+        /* Reset & Mobile Fixes */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
         body { 
-            background: var(--bg); 
-            color: var(--text); 
+            background: var(--bg); color: var(--text); 
             font-family: 'Montserrat', sans-serif; 
-            overflow-x: hidden;
-            width: 100%;
+            overflow-x: hidden; width: 100%; -webkit-font-smoothing: antialiased;
         }
 
         /* --- Loader --- */
@@ -28,17 +26,17 @@
             position: fixed; inset: 0; background: #fff; z-index: 1000;
             display: flex; justify-content: center; align-items: center;
         }
-        .loader-line { width: 80px; height: 1px; background: var(--gold); transform: scaleX(0); animation: load 1.2s forwards; }
+        .loader-line { width: 80px; height: 1px; background: var(--gold); transform: scaleX(0); animation: load 1s forwards; }
         @keyframes load { to { transform: scaleX(1); } }
 
         /* --- Navigation --- */
         nav { 
-            position: absolute; top: 0; width: 100%; padding: 30px; 
+            position: absolute; top: 0; width: 100%; padding: 25px 30px; 
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; 
         }
 
-        /* --- Hero Section (Responsive) --- */
+        /* --- Hero Section --- */
         .hero {
             position: relative; height: 100vh; width: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -47,40 +45,42 @@
         .hero-sub { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 15px; color: var(--gold); }
         .hero h1 { 
             font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
-            font-size: clamp(2.2rem, 12vw, 5rem); line-height: 1.1; margin-bottom: 35px;
+            font-size: clamp(2.2rem, 10vw, 5rem); line-height: 1.1; margin-bottom: 35px;
         }
         .btn-contact {
             pointer-events: auto; padding: 15px 35px; border: 1px solid var(--text);
             color: var(--text); text-decoration: none; font-size: 10px; letter-spacing: 2px;
             text-transform: uppercase; transition: var(--transition);
         }
+        .btn-contact:hover { background: var(--text); color: #fff; }
 
         canvas { position: absolute; inset: 0; z-index: 1; touch-action: none; }
 
-        /* --- Sections (Responsive) --- */
-        .section { padding: 80px 30px; background: var(--bg); position: relative; z-index: 20; }
+        /* --- Experience Section --- */
+        .section { padding: 80px 25px; background: var(--bg); position: relative; z-index: 20; }
         .section-header { margin-bottom: 50px; }
         .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; }
 
-        .exp-card { margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 30px; }
-        .exp-meta { font-size: 10px; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px; }
-        .exp-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 8px; }
-        .exp-desc { font-size: 13px; font-weight: 300; opacity: 0.8; }
+        .exp-card { margin-bottom: 45px; border-left: 1px solid rgba(197, 160, 89, 0.3); padding-left: 20px; }
+        .exp-meta { font-size: 10px; color: var(--gold); margin-bottom: 8px; letter-spacing: 1px; font-weight: 600; }
+        .exp-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 8px; font-weight: 600; }
+        .exp-desc { font-size: 13px; font-weight: 300; opacity: 0.8; line-height: 1.7; }
 
+        /* --- Skills Section --- */
         .skills-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
-        .skill-group h4 { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); }
+        .skill-group h4 { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .skill-list { list-style: none; font-size: 14px; font-weight: 300; }
         .skill-list li { margin-bottom: 12px; display: flex; align-items: center; }
-        .skill-list li::before { content: ""; width: 15px; height: 1px; background: var(--gold); margin-right: 12px; }
+        .skill-list li::before { content: ""; width: 12px; height: 1px; background: var(--gold); margin-right: 12px; }
 
-        footer { padding: 40px 30px; text-align: center; font-size: 9px; letter-spacing: 1px; opacity: 0.5; line-height: 2; }
+        footer { padding: 60px 25px; text-align: center; font-size: 9px; letter-spacing: 1px; opacity: 0.5; line-height: 2; border-top: 1px solid #eee; }
 
-        /* Desktop Adjustments */
+        /* Desktop Media Query */
         @media (min-width: 768px) {
             nav { padding: 40px 60px; font-size: 10px; }
-            .section { padding: 120px 10%; }
+            .section { padding: 120px 15%; }
             .skills-grid { grid-template-columns: repeat(3, 1fr); }
-            .exp-card { max-width: 700px; }
+            .exp-card { max-width: 800px; padding-left: 35px; }
         }
     </style>
 </head>
@@ -94,65 +94,68 @@
     </nav>
 
     <section class="hero">
-        <span class="hero-sub">Master Professional</span>
-        <h1>Elegance Redefined<br>in Nails & Hair</h1>
-        <a href="mailto:Nguyenthihaiii0494@gmail.com" class="btn-contact">Contact Me</a>
+        <span class="hero-sub">Master Beauty Artist</span>
+        <h1>Elegance Defined<br>in Nails & Hair</h1>
+        <a href="mailto:Nguyenthihaiii0494@gmail.com" class="btn-contact">Get in touch</a>
     </section>
 
     <canvas id="gardenCanvas"></canvas>
 
     <section class="section">
         <div class="section-header"><h2>Experience</h2></div>
+        
         <div class="exp-card">
             <div class="exp-meta">2023 — 2025 • Dubai</div>
             <h3>Fitness Salon</h3>
-            <p class="exp-desc">Professional nail and hair artistry including gel polish, blow-drying, and chemical treatment support[cite: 19, 20, 21].</p>
+            <p class="exp-desc">Provided expert manicure and pedicure services, specializing in gel polish and nail shaping. Assisted senior stylists with hair coloring, blow-drying, and chemical treatments.</p>
         </div>
+
         <div class="exp-card">
             <div class="exp-meta">2020 — 2022 • Dubai</div>
             <h3>Lanour Beauty Lounge</h3>
-            <p class="exp-desc">Luxury manicure, pedicure, and paraffin treatments with strict hygiene standards[cite: 30, 32, 33, 34].</p>
+            <p class="exp-desc">Specialized in precision nail care, luxury spa treatments, and paraffin therapy. Maintained impeccable salon hygiene and tool sterilization standards.</p>
         </div>
+
         <div class="exp-card">
             <div class="exp-meta">2017 — 2019 • Dubai</div>
             <h3>Companion Beauty Salon</h3>
-            <p class="exp-desc">Expert nail shaping and hair service assistance for chemical treatments[cite: 35, 36, 37, 38, 40].</p>
+            <p class="exp-desc">Delivered high-quality nail shaping and gel services. Supported hair technicians with sectioning, preparation, and styling for a premium clientele.</p>
         </div>
     </section>
 
     <section class="section" style="background: #fff;">
-        <div class="section-header"><h2>Skills</h2></div>
+        <div class="section-header"><h2>Technical Expertise</h2></div>
         <div class="skills-grid">
             <div class="skill-group">
-                <h4>Nails</h4>
+                <h4>Nail Care</h4>
                 <ul class="skill-list">
-                    <li>Nail Artistry [cite: 4]</li>
-                    <li>Pedicure Techniques [cite: 6]</li>
-                    <li>Gel Polish [cite: 20]</li>
+                    <li>Nail Artistry & Gel</li>
+                    <li>Pedicure Specialist</li>
+                    <li>Paraffin Spa Therapy</li>
                 </ul>
             </div>
             <div class="skill-group">
-                <h4>Hair</h4>
+                <h4>Hair Styling</h4>
                 <ul class="skill-list">
-                    <li>Hair Cutting [cite: 2]</li>
-                    <li>Coloring [cite: 3]</li>
-                    <li>Treatments [cite: 21]</li>
+                    <li>Coloring Support</li>
+                    <li>Professional Blow-dry</li>
+                    <li>Chemical Prep</li>
                 </ul>
             </div>
             <div class="skill-group">
-                <h4>Profile</h4>
+                <h4>Information</h4>
                 <ul class="skill-list">
-                    <li>English [cite: 28]</li>
-                    <li>Own Visa [cite: 26]</li>
-                    <li>Dubai Resident [cite: 12]</li>
+                    <li>Fluent English</li>
+                    <li>Own Visa Status</li>
+                    <li>Dubai Resident</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <footer>
-        THI HAI NGUYEN • DUBAI • 056 257 6386 [cite: 7, 10, 12]<br>
-        Born: 04-09-1994 [cite: 24]
+        THI HAI NGUYEN • AL SATWA, DUBAI • 056 257 6386<br>
+        DEDICATED BEAUTY PROFESSIONAL SINCE 2017
     </footer>
 
     <script>
@@ -161,16 +164,15 @@
         let width, height, blades = [];
         const mouse = { x: -1000, y: -1000, lerpX: -1000, lerpY: -1000 };
 
-        // Responsive blade count
-        const getCount = () => window.innerWidth < 768 ? 12 : 28;
+        const getCount = () => window.innerWidth < 768 ? 14 : 30;
 
         class Blade {
             constructor(x) {
                 this.x = x;
-                this.h = Math.random() * 200 + (window.innerWidth < 768 ? 250 : 350);
+                this.h = Math.random() * 200 + (window.innerWidth < 768 ? 250 : 400);
                 this.segments = 15;
                 this.points = [];
-                this.color = Math.random() > 0.8 ? '#c5a059' : '#eebdc4';
+                this.color = Math.random() > 0.7 ? '#c5a059' : '#eebdc4';
                 for(let i = 0; i < this.segments; i++) {
                     this.points.push({ x: x, y: 0, vx: 0, vy: 0 });
                 }
@@ -182,12 +184,12 @@
                     if(i === 0) { p.x = this.x; p.y = height + 30; }
                     else {
                         const prev = this.points[i-1];
-                        const sway = Math.sin(Date.now() * 0.0008 + this.x) * (i * 0.2);
+                        const sway = Math.sin(Date.now() * 0.0008 + this.x) * (i * 0.25);
                         const d = Math.hypot(mouse.lerpX - p.x, mouse.lerpY - p.y);
-                        const force = Math.max(0, (150 - d) / 150);
+                        const force = Math.max(0, (180 - d) / 180);
                         p.vx += (mouse.lerpX - p.x) * force * 0.02;
                         p.vy += (mouse.lerpY - p.y) * force * 0.02;
-                        p.vx *= 0.8; p.vy *= 0.8;
+                        p.vx *= 0.82; p.vy *= 0.82;
                         p.x += p.vx + sway; p.y += p.vy;
                         const dist = this.h / this.segments;
                         const accDist = Math.hypot(p.x - prev.x, p.y - prev.y);
@@ -204,13 +206,13 @@
                     const yc = (this.points[i].y + this.points[i+1].y) / 2;
                     ctx.quadraticCurveTo(this.points[i].x, this.points[i].y, xc, yc);
                 }
-                ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+                ctx.strokeStyle = 'rgba(0,0,0,0.07)';
                 ctx.lineWidth = 1; ctx.stroke();
                 const tip = this.points[this.segments-1];
                 ctx.save();
                 ctx.translate(tip.x, tip.y);
                 ctx.fillStyle = this.color;
-                ctx.beginPath(); ctx.ellipse(0, 0, 3, 10, Math.PI/4, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.ellipse(0, 0, 3, 11, Math.PI/4, 0, Math.PI*2); ctx.fill();
                 ctx.restore();
             }
         }
@@ -235,8 +237,8 @@
         };
 
         window.addEventListener('mousemove', handleInput);
-        window.addEventListener('touchstart', handleInput);
-        window.addEventListener('touchmove', handleInput);
+        window.addEventListener('touchstart', handleInput, {passive: true});
+        window.addEventListener('touchmove', handleInput, {passive: true});
         window.addEventListener('resize', init);
 
         window.onload = () => {
