@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Nail Artist CV | Dubai Experience</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --soft-pink: #fce4ec;
+            --main-pink: #f06292;
+            --dark-pink: #ad1457;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fffafb;
+            color: #444;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(252, 228, 236, 0.8), rgba(252, 228, 236, 0.8)), 
+                        url('https://images.unsplash.com/photo-1604314134173-6b7821002cd0?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--dark-pink);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        /* Floating Animation for Hero */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Main Container */
+        .container { max-width: 1100px; margin: 0 auto; padding: 80px 20px; }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: var(--main-pink);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Experience Cards */
+        .exp-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-left: 8px solid var(--main-pink);
+            transition: 0.3s;
+        }
+
+        .exp-card:hover { transform: scale(1.02); }
+
+        /* Portfolio Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 350px;
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, var(--dark-pink));
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover .overlay { height: 30%; }
+
+        .overlay-text { color: white; font-weight: 600; }
+
+        /* Skill Pills */
+        .skill-tag {
+            display: inline-block;
+            background: var(--soft-pink);
+            color: var(--dark-pink);
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin: 5px;
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--dark-pink);
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div data-aos="fade-down" class="floating">
+            <h1 style="font-size: 5rem;">ALEX NGUYEN</h1>
+            <p style="font-size: 1.5rem; letter-spacing: 5px;">ELITE NAIL ARTIST</p>
+            <p style="margin-top: 20px;"><i class="fas fa-map-marker-alt"></i> DUBAI, UAE</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section data-aos="fade-up">
+            <h2 class="section-title">Glamour Profile</h2>
+            <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+                5 years of crafting luxury in Dubai's most prestigious salons. Specializing in high-end artistry that blends Middle Eastern opulence with modern minimalism.
+            </p>
+        </section>
+
+        <section style="margin-top: 100px;">
+            <h2 class="section-title">Signature Skills</h2>
+            <div style="text-align: center;" data-aos="zoom-in">
+                <span class="skill-tag">Russian Manicure</span>
+                <span class="skill-tag">3D Nail Art</span>
+                <span class="skill-tag">Hard Gel Extension</span>
+                <span class="skill-tag">Swarovski Placement</span>
+                <span class="skill-tag">Ombre Technique</span>
+                <span class="skill-tag">Polygel Specialist</span>
+            </div>
+        </section>
+
+        <section style="margin-top: 100px;">
+            <h2 class="section-title">Career Journey</h2>
+            
+            <div class="exp-card" data-aos="fade-right">
+                <h3 style="color: var(--dark-pink);">Senior Technician - Royal Glow Salon Dubai</h3>
+                <p><strong>2021 - Present</strong></p>
+                <p style="margin-top: 10px;">Providing bespoke nail services to international influencers and VIP clients in Downtown Dubai. Specialized in long-lasting gel systems and luxury spa treatments.</p>
+            </div>
+
+            <div class="exp-card" data-aos="fade-left">
+                <h3 style="color: var(--dark-pink);">Nail Artist - Jumeirah Beauty Lounge</h3>
+                <p><strong>2019 - 2021</strong></p>
+                <p style="margin-top: 10px;">Mastered the art of Russian E-file manicure and intricate hand-painted designs. Collaborated on photoshoot nails for local fashion brands.</p>
+            </div>
+        </section>
+
+        <section style="margin-top: 100px;">
+            <h2 class="section-title">Masterpieces</h2>
+            <div class="gallery">
+                <div class="gallery-item" data-aos="flip-left">
+                    <img src="https://images.unsplash.com/photo-1632345033839-21c73b2f3d46?auto=format&fit=crop&w=500&q=80" alt="Nail Art 1">
+                    <div class="overlay"><div class="overlay-text">Dubai Gold Leaf Design</div></div>
+                </div>
+                <div class="gallery-item" data-aos="flip-up">
+                    <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=500&q=80" alt="Nail Art 2">
+                    <div class="overlay"><div class="overlay-text">Rose Quartz Acrylic</div></div>
+                </div>
+                <div class="gallery-item" data-aos="flip-right">
+                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=500&q=80" alt="Nail Art 3">
+                    <div class="overlay"><div class="overlay-text">Minimalist Pastel Art</div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 20px;">Let's Connect</h2>
+        <p>Email: alex.naildubai@email.com</p>
+        <p>Instagram: @AlexNails_Dubai</p>
+        <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">&copy; 2026 Crafted with Love for Professional Artists</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>
